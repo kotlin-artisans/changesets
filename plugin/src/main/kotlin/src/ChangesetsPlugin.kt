@@ -3,18 +3,118 @@
  */
 package src
 
-import org.gradle.api.Project
+import org.gradle.api.Action
+import org.gradle.api.DefaultTask
 import org.gradle.api.Plugin
+import org.gradle.api.Project
+import org.gradle.api.Task
+import org.gradle.api.tasks.AbstractExecTask
+import org.gradle.api.tasks.Exec
+import src.extensions.joinLines
+import src.models.Changelog
+import src.models.Release
+import src.models.SemanticVersion
+import java.time.LocalDate
+import java.util.Locale
+import java.util.Optional
+import kotlin.jvm.optionals.getOrElse
 
 /**
  * A simple 'hello world' plugin.
  */
-class ChangesetsPlugin: Plugin<Project> {
+class ChangesetsPlugin : Plugin<Project> {
     override fun apply(project: Project) {
-        // Register a task
-        project.tasks.register("greeting") { task ->
-            task.doLast {
-                println("Hello from plugin 'src.greeting'")
+        project.tasks.register("release", ReleaseTask::class.java)
+    }
+}
+
+/**
+ * Manages the release of a package
+ */
+open class ReleaseTask : Exec() {
+    override fun doFirst(action: Action<in Task>): Task {
+        val task = this
+
+        return super.doFirst(action).apply {
+            val changelogFile = project.file("CHANGELOG.md")
+
+            val changelogLines = when (changelogFile.exists()) {
+                true -> changelogFile.readLines()
+                false -> arrayListOf<String>().apply {
+                    println("${changelogFile.name} does not exist! Creating after task execution...")
+                }
+            }
+
+            val changelog = Changelog.parse(changelogLines)
+            val lastReleaseVersion = when (changelog.unreleased()) {
+                false -> changelog.latest().version
+                true -> SemanticVersion.empty()
+            }
+
+            println(
+                """
+Last released version: $lastReleaseVersion
+
+👉 Choose one of the following options:
+- major (+)
+- minor (-)
+- patch (~)
+""".trimIndent()
+            )
+
+            val option = readln()
+
+            val newVersion = when (option) {
+                "+" -> lastReleaseVersion.incrementMajor()
+                "-" -> lastReleaseVersion.incrementMinor()
+                else -> lastReleaseVersion.incrementPatch()
+            }
+
+            val releaseNotes = arrayListOf<String>()
+
+            while (true) {
+                println(
+                    """
+✍️ Write this version release notes (double enter to finish):
+${releaseNotes.joinLines()}
+""".trim()
+                )
+
+                releaseNotes.add(readln())
+
+                if (releaseNotes.last().isEmpty()) {
+                    break
+                }
+            }
+
+            val release = Release(
+                version = newVersion,
+                date = LocalDate.now(),
+                notes = releaseNotes.apply {
+                    if (releaseNotes.size == 1) {
+                        add("No release notes included in this release.")
+                    }
+                }.filter { it.isNotEmpty() },
+            )
+
+            println(
+                """
+${release.version}
+
+${release.notes.joinLines()}
+
+🤚 Proceed to release version? (Y/n)
+        """.trimIndent()
+            )
+
+            val isToReleaseNewVersion = !readln().lowercase(Locale.getDefault()).startsWith("n")
+
+            if (isToReleaseNewVersion) {
+                changelog.include(release)
+                changelogFile.writeText(changelog.toString())
+
+                task.executable = "git"
+                task.args = arrayListOf("tag", "-a", "v$newVersion", "-m", release.notes.joinLines())
             }
         }
     }
