@@ -11,12 +11,15 @@ import kotlin.test.assertNotNull
  * A simple unit test for the 'src.greeting' plugin.
  */
 class ChangesetsPluginTest {
-    @Test fun `plugin registers task`() {
-        // Create a test project and apply the plugin
+    @Test fun `release task is registered`() {
+        // Arrange
         val project = ProjectBuilder.builder().build()
-        project.plugins.apply("src.greeting")
+        project.plugins.apply("changesets")
 
-        // Verify the result
-        assertNotNull(project.tasks.findByName("greeting"))
+        // Act
+        val task = project.tasks.findByName("release")
+
+        // Assert
+        assertNotNull(task)
     }
 }
