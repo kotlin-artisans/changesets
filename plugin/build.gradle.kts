@@ -26,8 +26,8 @@ dependencies {
 
 gradlePlugin {
     // Define the plugin
-    val greeting by plugins.creating {
-        id = "src.greeting"
+    val changesets by plugins.creating {
+        id = "changesets"
         implementationClass = "src.ChangesetsPlugin"
     }
 }
