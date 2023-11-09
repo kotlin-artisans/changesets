@@ -3,21 +3,17 @@
  */
 package src
 
-import org.gradle.api.Action
 import org.gradle.api.DefaultTask
 import org.gradle.api.Plugin
 import org.gradle.api.Project
-import org.gradle.api.Task
-import org.gradle.api.tasks.AbstractExecTask
-import org.gradle.api.tasks.Exec
+import org.gradle.api.tasks.Input
+import org.gradle.api.tasks.TaskAction
 import src.extensions.joinLines
 import src.models.Changelog
 import src.models.Release
 import src.models.SemanticVersion
 import java.time.LocalDate
-import java.util.Locale
-import java.util.Optional
-import kotlin.jvm.optionals.getOrElse
+import java.util.*
 
 /**
  * A simple 'hello world' plugin.
@@ -31,28 +27,35 @@ class ChangesetsPlugin : Plugin<Project> {
 /**
  * Manages the release of a package
  */
-open class ReleaseTask : Exec() {
-    override fun doFirst(action: Action<in Task>): Task {
-        val task = this
+open class ReleaseTask : DefaultTask() {
 
-        return super.doFirst(action).apply {
-            val changelogFile = project.file("CHANGELOG.md")
+    /**
+     * Whether the task should create a commit for CHANGELOG.md changes or not.
+     *
+     * Defaults to true.
+     */
+    @Input
+    val commit: Boolean = true
 
-            val changelogLines = when (changelogFile.exists()) {
-                true -> changelogFile.readLines()
-                false -> arrayListOf<String>().apply {
-                    println("${changelogFile.name} does not exist! Creating after task execution...")
-                }
+    @TaskAction
+    fun execute() {
+        val changelogFile = project.rootProject.file("CHANGELOG.md")
+
+        val changelogLines = when (changelogFile.exists()) {
+            true -> changelogFile.readLines()
+            false -> arrayListOf<String>().apply {
+                println("${changelogFile.name} does not exist! Creating after task execution...")
             }
+        }
 
-            val changelog = Changelog.parse(changelogLines)
-            val lastReleaseVersion = when (changelog.unreleased()) {
-                false -> changelog.latest().version
-                true -> SemanticVersion.empty()
-            }
+        val changelog = Changelog.parse(changelogLines)
+        val lastReleaseVersion = when (changelog.unreleased()) {
+            false -> changelog.latest().version
+            true -> SemanticVersion.empty()
+        }
 
-            println(
-                """
+        println(
+            """
 Last released version: $lastReleaseVersion
 
 👉 Choose one of the following options:
@@ -60,62 +63,102 @@ Last released version: $lastReleaseVersion
 - minor (-)
 - patch (~)
 """.trimIndent()
-            )
+        )
 
-            val option = readln()
+        val option = readln()
 
-            val newVersion = when (option) {
-                "+" -> lastReleaseVersion.incrementMajor()
-                "-" -> lastReleaseVersion.incrementMinor()
-                else -> lastReleaseVersion.incrementPatch()
-            }
+        val newVersion = when (option) {
+            "+" -> lastReleaseVersion.incrementMajor()
+            "-" -> lastReleaseVersion.incrementMinor()
+            else -> lastReleaseVersion.incrementPatch()
+        }
 
-            val releaseNotes = arrayListOf<String>()
+        val releaseNotes = arrayListOf<String>()
 
-            while (true) {
-                println(
-                    """
+        while (true) {
+            println(
+                """
 ✍️ Write this version release notes (double enter to finish):
 ${releaseNotes.joinLines()}
 """.trim()
-                )
-
-                releaseNotes.add(readln())
-
-                if (releaseNotes.last().isEmpty()) {
-                    break
-                }
-            }
-
-            val release = Release(
-                version = newVersion,
-                date = LocalDate.now(),
-                notes = releaseNotes.apply {
-                    if (releaseNotes.size == 1) {
-                        add("No release notes included in this release.")
-                    }
-                }.filter { it.isNotEmpty() },
             )
 
-            println(
-                """
+            releaseNotes.add(readln())
+
+            if (releaseNotes.last().isEmpty()) {
+                break
+            }
+        }
+
+        val release = Release(
+            version = newVersion,
+            date = LocalDate.now(),
+            notes = releaseNotes.apply {
+                if (releaseNotes.size == 1) {
+                    add("No release notes included in this release.")
+                }
+            }.filter { it.isNotEmpty() },
+        )
+
+        println(
+            """
 ${release.version}
 
 ${release.notes.joinLines()}
 
 🤚 Proceed to release version? (Y/n)
         """.trimIndent()
-            )
+        )
 
-            val isToReleaseNewVersion = !readln().lowercase(Locale.getDefault()).startsWith("n")
+        val isToReleaseNewVersion = !readln().lowercase(Locale.getDefault()).startsWith("n")
 
-            if (isToReleaseNewVersion) {
-                changelog.include(release)
-                changelogFile.writeText(changelog.toString())
+        if (isToReleaseNewVersion) {
+            changelog.include(release)
+            changelogFile.writeText(changelog.toString())
 
-                task.executable = "git"
-                task.args = arrayListOf("tag", "-a", "v$newVersion", "-m", release.notes.joinLines())
+            if (commit) {
+                chain(
+                    arrayListOf(
+                        {
+                            systemCall("git add ${changelogFile.path}")
+                            systemCall("git commit -m \"chore(release): release notes for version $newVersion\"")
+                        }
+                    )
+                ) {
+                    it != 0
+                }
             }
         }
     }
+
+    override fun getDescription() = "Manages the release of a package"
+    override fun getGroup() = "Changesets"
+}
+
+/**
+ * Executes a system call via [Runtime] API, blocking the result until the process finishes.
+ */
+private fun systemCall(command: String) = Runtime.getRuntime().exec(
+    command
+).exitValue()
+
+/**
+ * Executes a chain of calls until the result of the `terminate` predicate returns true or if it reaches
+ * the end of the calls list.
+ */
+private fun <R> chain(
+    calls: List<() -> R>,
+    terminate: (R) -> Boolean
+): Result<Unit> {
+    for (call in calls) {
+        val status = call()
+
+        if (terminate(status)) {
+            return Result.failure(
+                IllegalStateException("call $call failed validation with status code: $status")
+            )
+        }
+    }
+
+    return Result.success(Unit)
 }
