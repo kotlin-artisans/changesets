@@ -9,3 +9,11 @@
 
 rootProject.name = "example"
 include("lib")
+
+pluginManagement {
+    repositories {
+        gradlePluginPortal()
+        mavenLocal()
+        mavenCentral()
+    }
+}
