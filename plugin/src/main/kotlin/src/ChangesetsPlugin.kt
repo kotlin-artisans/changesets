@@ -16,7 +16,7 @@ import java.time.LocalDate
 import java.util.*
 
 /**
- * A simple 'hello world' plugin.
+ * Definition of Changesets plugin tasks.
  */
 class ChangesetsPlugin : Plugin<Project> {
     override fun apply(project: Project) {
