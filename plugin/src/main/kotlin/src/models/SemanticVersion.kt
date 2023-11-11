@@ -34,6 +34,8 @@ data class SemanticVersion(
     companion object {
         val regex = Regex("([0-9]+)\\.([0-9]+)\\.([0-9]+)")
 
+        private const val REGEX_VALID_GROUP_MATCHES_COUNT = 4
+
         /**
          * Tries to create a [SemanticVersion] instance from a string. If parsing fails, an empty [Optional] instance
          * is returned.
@@ -41,7 +43,7 @@ data class SemanticVersion(
         fun of(value: String): Optional<SemanticVersion> {
             val matches = regex.matchEntire(value.trim())?.groupValues
 
-            if (matches?.size != 4) {
+            if (matches?.size != REGEX_VALID_GROUP_MATCHES_COUNT) {
                 return Optional.empty()
             }
 
