@@ -55,7 +55,8 @@ class ChangelogTest {
 
         val changelog = Changelog(
             sortedSetOf(
-                oldestRelease, newestRelease
+                oldestRelease,
+                newestRelease
             )
         )
 
@@ -86,7 +87,8 @@ class ChangelogTest {
 
         val changelog = Changelog(
             sortedSetOf(
-                oldestRelease, newestRelease
+                oldestRelease,
+                newestRelease
             )
         )
 

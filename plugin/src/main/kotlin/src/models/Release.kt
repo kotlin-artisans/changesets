@@ -9,7 +9,7 @@ data class Release(
     val version: SemanticVersion,
     val date: LocalDate,
     val notes: ReleaseNotes,
-): Comparable<Release> {
+) : Comparable<Release> {
 
     /**
      * Version is the identity of a [Release], so an instance hash code is given by the [version] property.
