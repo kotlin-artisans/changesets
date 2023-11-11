@@ -15,7 +15,7 @@ dependencies {
 
 @Suppress("UnstableApiUsage")
 gradlePlugin {
-    group = "com.github.kotlin-artisans"
+    group = "io.github.kotlin-artisans"
     version = "0.0.1"
 
     val changesets by plugins.creating {
