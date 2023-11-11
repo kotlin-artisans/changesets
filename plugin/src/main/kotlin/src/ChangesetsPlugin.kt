@@ -10,6 +10,7 @@ import org.gradle.api.tasks.Input
 import org.gradle.api.tasks.TaskAction
 import src.extensions.joinLines
 import src.models.Changelog
+import src.models.Git
 import src.models.Release
 import src.models.SemanticVersion
 import java.time.LocalDate
@@ -117,48 +118,11 @@ ${release.notes.joinLines()}
             changelogFile.writeText(changelog.toString())
 
             if (commit) {
-                chain(
-                    arrayListOf(
-                        {
-                            systemCall("git add ${changelogFile.path}")
-                            systemCall("git commit -m \"chore(release): release notes for version $newVersion\"")
-                        }
-                    )
-                ) {
-                    it != 0
-                }
+                Git.add(changelogFile.path).commit("docs(changeset): release notes for version $newVersion")
             }
         }
     }
 
     override fun getDescription() = "Manages the release of a package"
     override fun getGroup() = "Changesets"
-}
-
-/**
- * Executes a system call via [Runtime] API, blocking the result until the process finishes.
- */
-private fun systemCall(command: String) = Runtime.getRuntime().exec(
-    command
-).exitValue()
-
-/**
- * Executes a chain of calls until the result of the `terminate` predicate returns true or if it reaches
- * the end of the calls list.
- */
-private fun <R> chain(
-    calls: List<() -> R>,
-    terminate: (R) -> Boolean
-): Result<Unit> {
-    for (call in calls) {
-        val status = call()
-
-        if (terminate(status)) {
-            return Result.failure(
-                IllegalStateException("call $call failed validation with status code: $status")
-            )
-        }
-    }
-
-    return Result.success(Unit)
 }
