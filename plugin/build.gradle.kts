@@ -3,6 +3,7 @@ plugins {
 
     id("org.jetbrains.kotlin.jvm") version "1.8.10"
     id("com.gradle.plugin-publish") version "1.2.1"
+    id("io.gitlab.arturbosch.detekt") version "1.23.3"
 
     // Applying own plugin to automate release process
     //id("io.github.kotlin-artisans.changesets") version "0.0.3"
@@ -14,6 +15,8 @@ repositories {
 
 dependencies {
     testImplementation("org.jetbrains.kotlin:kotlin-test-junit5")
+
+    detektPlugins("io.gitlab.arturbosch.detekt:detekt-formatting:1.23.0")
 }
 
 @Suppress("UnstableApiUsage")
@@ -37,4 +40,11 @@ gradlePlugin {
 
 tasks.named<Test>("test") {
     useJUnitPlatform()
+}
+
+detekt {
+    config.setFrom(rootProject.file("config/detekt/detekt.yml"))
+
+    parallel = true
+    autoCorrect = true
 }
