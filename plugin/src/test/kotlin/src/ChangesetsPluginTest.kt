@@ -15,7 +15,7 @@ class ChangesetsPluginTest {
     fun `release task is registered`() {
         // Arrange
         val project = ProjectBuilder.builder().build()
-        project.plugins.apply("changesets")
+        project.plugins.apply("io.github.kotlin-artisans.changesets")
 
         // Act
         val task = project.tasks.findByName("release")
