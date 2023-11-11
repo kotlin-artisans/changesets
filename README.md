@@ -32,7 +32,7 @@ After that, include the plugin in your root `build.gradle`:
 
 ```groovy
 plugins {
-    id("changesets") version "0.0.1"
+    id("changesets") version "0.0.2"
 }
 ```
 
