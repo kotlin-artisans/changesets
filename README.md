@@ -40,6 +40,7 @@ If all goes well, you can start using the tasks available in `changesets` group:
 
 ```
 ./gradlew tasks
+
 ...
 Changesets tasks
 ----------------
