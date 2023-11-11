@@ -5,7 +5,7 @@ plugins {
     id("com.gradle.plugin-publish") version "1.2.1"
 
     // Applying own plugin to automate release process
-    id("io.github.kotlin-artisans.changesets") version "0.0.2"
+    //id("io.github.kotlin-artisans.changesets") version "0.0.2"
 }
 
 repositories {
