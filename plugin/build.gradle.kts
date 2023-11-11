@@ -3,6 +3,9 @@ plugins {
 
     id("org.jetbrains.kotlin.jvm") version "1.8.10"
     id("com.gradle.plugin-publish") version "1.2.1"
+
+    // Applying own plugin to automate release process
+    id("changesets") version "0.0.1"
 }
 
 repositories {
