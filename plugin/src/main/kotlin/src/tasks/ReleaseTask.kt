@@ -88,6 +88,9 @@ ${release.notes.joinLines()}
         }
     }
 
+    override fun getDescription() = "Manages the release of a package"
+    override fun getGroup() = "Changesets"
+
     /**
      * Extracts the lines of a file, defaulting to an empty list if the file does not exist.
      */
@@ -141,7 +144,4 @@ ${release.notes.joinLines()}
                 .onFailure { it.printStackTrace() }
         }
     }
-
-    override fun getDescription() = "Manages the release of a package"
-    override fun getGroup() = "Changesets"
 }
