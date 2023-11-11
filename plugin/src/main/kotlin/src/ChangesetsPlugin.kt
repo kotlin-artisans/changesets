@@ -63,7 +63,7 @@ Last released version: $lastReleaseVersion
 - major (+)
 - minor (-)
 - patch (~)
-""".trimIndent()
+            """.trimIndent()
         )
 
         val option = readln()
@@ -108,7 +108,7 @@ ${release.version}
 ${release.notes.joinLines()}
 
 🤚 Proceed to release version? (Y/n)
-        """.trimIndent()
+            """.trimIndent()
         )
 
         val isToReleaseNewVersion = !readln().lowercase(Locale.getDefault()).startsWith("n")
