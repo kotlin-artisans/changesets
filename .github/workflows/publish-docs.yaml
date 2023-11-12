@@ -17,5 +17,9 @@ jobs:
           java-version: 11
           cache: gradle
 
-      - name: Run check validations
-        run: ./gradlew dokkaHtmlPublish
+      - name: Publish docs to gh-pages branch
+        run: |
+          git remote set-url origin https://git:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git
+          ./gradlew dokkaHtmlPublish
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
