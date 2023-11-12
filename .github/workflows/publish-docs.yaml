@@ -20,6 +20,9 @@ jobs:
       - name: Publish docs to gh-pages branch
         run: |
           git remote set-url origin https://git:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git
+          git config user.name "github-actions-bot"
+          git config user.email "support+actions@github.com
+          
           ./gradlew dokkaHtmlPublish
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
