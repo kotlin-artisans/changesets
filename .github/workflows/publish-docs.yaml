@@ -1,0 +1,21 @@
+name: Publish docs to GitHub Pages
+on:
+  push:
+    branches:
+      - master
+
+concurrency: ${{ github.workflow }}-${{ github.ref }}
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-java@v3
+        with:
+          distribution: corretto
+          java-version: 11
+          cache: gradle
+
+      - name: Run check validations
+        run: ./gradlew dokkaHtmlPublish
