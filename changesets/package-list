@@ -1,0 +1,59 @@
+$dokka.format:html-v1
+$dokka.linkExtension:html
+$dokka.location:src.extensions////PointingToDeclaration/changesets/src.extensions/index.html
+$dokka.location:src.extensions//joinLines/kotlin.collections.Iterable[TypeParam(bounds=[kotlin.Any?])]#kotlin.Function1[TypeParam(bounds=[kotlin.Any?]),kotlin.String]/PointingToDeclaration/changesets/src.extensions/join-lines.html
+$dokka.location:src.extensions//replace/kotlin.String#kotlin.String/PointingToDeclaration/changesets/src.extensions/replace.html
+$dokka.location:src.models////PointingToDeclaration/changesets/src.models/index.html
+$dokka.location:src.models/Changelog.Companion///PointingToDeclaration/changesets/src.models/-changelog/-companion/index.html
+$dokka.location:src.models/Changelog.Companion/parse/#kotlin.collections.List[kotlin.String]/PointingToDeclaration/changesets/src.models/-changelog/-companion/parse.html
+$dokka.location:src.models/Changelog///PointingToDeclaration/changesets/src.models/-changelog/index.html
+$dokka.location:src.models/Changelog/Changelog/#java.util.SortedSet[src.models.Release]/PointingToDeclaration/changesets/src.models/-changelog/-changelog.html
+$dokka.location:src.models/Changelog/include/#src.models.Release/PointingToDeclaration/changesets/src.models/-changelog/include.html
+$dokka.location:src.models/Changelog/latest/#/PointingToDeclaration/changesets/src.models/-changelog/latest.html
+$dokka.location:src.models/Changelog/releases/#/PointingToDeclaration/changesets/src.models/-changelog/releases.html
+$dokka.location:src.models/Changelog/toString/#/PointingToDeclaration/changesets/src.models/-changelog/to-string.html
+$dokka.location:src.models/Changelog/unreleased/#/PointingToDeclaration/changesets/src.models/-changelog/unreleased.html
+$dokka.location:src.models/Git.Builder///PointingToDeclaration/changesets/src.models/-git/-builder/index.html
+$dokka.location:src.models/Git.Builder/Builder/#/PointingToDeclaration/changesets/src.models/-git/-builder/-builder.html
+$dokka.location:src.models/Git.Builder/add/#kotlin.String/PointingToDeclaration/changesets/src.models/-git/-builder/add.html
+$dokka.location:src.models/Git.Builder/commit/#kotlin.String/PointingToDeclaration/changesets/src.models/-git/-builder/commit.html
+$dokka.location:src.models/Git///PointingToDeclaration/changesets/src.models/-git/index.html
+$dokka.location:src.models/Git/add/#kotlin.String/PointingToDeclaration/changesets/src.models/-git/add.html
+$dokka.location:src.models/Release///PointingToDeclaration/changesets/src.models/-release/index.html
+$dokka.location:src.models/Release/Release/#src.models.SemanticVersion#java.time.LocalDate#kotlin.collections.List[kotlin.String]/PointingToDeclaration/changesets/src.models/-release/-release.html
+$dokka.location:src.models/Release/compareTo/#src.models.Release/PointingToDeclaration/changesets/src.models/-release/compare-to.html
+$dokka.location:src.models/Release/date/#/PointingToDeclaration/changesets/src.models/-release/date.html
+$dokka.location:src.models/Release/equals/#kotlin.Any?/PointingToDeclaration/changesets/src.models/-release/equals.html
+$dokka.location:src.models/Release/hashCode/#/PointingToDeclaration/changesets/src.models/-release/hash-code.html
+$dokka.location:src.models/Release/notes/#/PointingToDeclaration/changesets/src.models/-release/notes.html
+$dokka.location:src.models/Release/version/#/PointingToDeclaration/changesets/src.models/-release/version.html
+$dokka.location:src.models/ReleaseNotes///PointingToDeclaration/changesets/src.models/-release-notes/index.html
+$dokka.location:src.models/SemanticVersion.Companion///PointingToDeclaration/changesets/src.models/-semantic-version/-companion/index.html
+$dokka.location:src.models/SemanticVersion.Companion/empty/#/PointingToDeclaration/changesets/src.models/-semantic-version/-companion/empty.html
+$dokka.location:src.models/SemanticVersion.Companion/of/#kotlin.String/PointingToDeclaration/changesets/src.models/-semantic-version/-companion/of.html
+$dokka.location:src.models/SemanticVersion.Companion/regex/#/PointingToDeclaration/changesets/src.models/-semantic-version/-companion/regex.html
+$dokka.location:src.models/SemanticVersion///PointingToDeclaration/changesets/src.models/-semantic-version/index.html
+$dokka.location:src.models/SemanticVersion/SemanticVersion/#kotlin.Int#kotlin.Int#kotlin.Int/PointingToDeclaration/changesets/src.models/-semantic-version/-semantic-version.html
+$dokka.location:src.models/SemanticVersion/incrementMajor/#/PointingToDeclaration/changesets/src.models/-semantic-version/increment-major.html
+$dokka.location:src.models/SemanticVersion/incrementMinor/#/PointingToDeclaration/changesets/src.models/-semantic-version/increment-minor.html
+$dokka.location:src.models/SemanticVersion/incrementPatch/#/PointingToDeclaration/changesets/src.models/-semantic-version/increment-patch.html
+$dokka.location:src.models/SemanticVersion/major/#/PointingToDeclaration/changesets/src.models/-semantic-version/major.html
+$dokka.location:src.models/SemanticVersion/minor/#/PointingToDeclaration/changesets/src.models/-semantic-version/minor.html
+$dokka.location:src.models/SemanticVersion/patch/#/PointingToDeclaration/changesets/src.models/-semantic-version/patch.html
+$dokka.location:src.models/SemanticVersion/toString/#/PointingToDeclaration/changesets/src.models/-semantic-version/to-string.html
+$dokka.location:src.tasks////PointingToDeclaration/changesets/src.tasks/index.html
+$dokka.location:src.tasks/ReleaseTask///PointingToDeclaration/changesets/src.tasks/-release-task/index.html
+$dokka.location:src.tasks/ReleaseTask/ReleaseTask/#/PointingToDeclaration/changesets/src.tasks/-release-task/-release-task.html
+$dokka.location:src.tasks/ReleaseTask/commit/#/PointingToDeclaration/changesets/src.tasks/-release-task/commit.html
+$dokka.location:src.tasks/ReleaseTask/execute/#/PointingToDeclaration/changesets/src.tasks/-release-task/execute.html
+$dokka.location:src.tasks/ReleaseTask/getDescription/#/PointingToDeclaration/changesets/src.tasks/-release-task/get-description.html
+$dokka.location:src.tasks/ReleaseTask/getGroup/#/PointingToDeclaration/changesets/src.tasks/-release-task/get-group.html
+$dokka.location:src////PointingToDeclaration/changesets/src/index.html
+$dokka.location:src/ChangesetsPlugin///PointingToDeclaration/changesets/src/-changesets-plugin/index.html
+$dokka.location:src/ChangesetsPlugin/ChangesetsPlugin/#/PointingToDeclaration/changesets/src/-changesets-plugin/-changesets-plugin.html
+$dokka.location:src/ChangesetsPlugin/apply/#org.gradle.api.Project/PointingToDeclaration/changesets/src/-changesets-plugin/apply.html
+src
+src.extensions
+src.models
+src.tasks
+
