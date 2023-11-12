@@ -9,7 +9,7 @@
 plugins {
     // Apply the org.jetbrains.kotlin.jvm Plugin to add support for Kotlin.
     id("org.jetbrains.kotlin.jvm") version "1.8.10"
-    id("io.github.kotlin-artisans.changesets") version "0.0.3"
+    id("io.github.kotlin-artisans.changesets") version "0.0.4"
 
     // Apply the java-library plugin for API and implementation separation.
     `java-library`

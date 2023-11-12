@@ -9,7 +9,7 @@ plugins {
     id("org.jetbrains.dokka") version "1.9.10"
 
     // Applying own plugin to automate release process
-    //id("io.github.kotlin-artisans.changesets") version "0.0.3"
+    //id("io.github.kotlin-artisans.changesets") version "0.0.4"
 }
 
 repositories {
@@ -25,7 +25,7 @@ dependencies {
 @Suppress("UnstableApiUsage")
 gradlePlugin {
     group = "io.github.kotlin-artisans"
-    version = "0.0.3"
+    version = "0.0.4"
 
     val changesets by plugins.creating {
         id = "$group.changesets"
