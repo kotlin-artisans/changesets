@@ -122,7 +122,7 @@ tasks {
             exec {
                 workingDir = tempDirectory
                 executable = "git"
-                args = arrayListOf("push", "--no-verify", "--force")
+                args = arrayListOf("push", "--no-verify", "--force", "--set-upstream", "origin", "gh-pages")
             }
 
             true
