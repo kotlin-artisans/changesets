@@ -1,6 +1,6 @@
-                ## 0.0.4 (2023-11-12)
+## 0.0.4 (2023-11-12)
 
-                - chore: add detekt to lint + format project
+- chore: add detekt to lint + format project
 - chore: add dokka to generate documentation for plugin
 - chore: action to run check task on every commit
 - chore: action to publish dokka docs to github pages
